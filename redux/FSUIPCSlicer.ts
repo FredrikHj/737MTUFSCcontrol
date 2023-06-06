@@ -3,34 +3,38 @@ import generalTexts from "../data/GeneralTexts";
 
 interface State {
     name: string,
+    connectionLoading: boolean,
     connected: boolean,
     stateName: string,
-    instance: any,
+    errorInfo: string,
 }
 
 const initialState: State = {
     name: "FSUIPC",
+    connectionLoading: false,
     connected: false,
     stateName: generalTexts.conStates.state["notStarted"],
-    instance: null,
+    errorInfo: "",
 }
 
 export const FSUIPCSlicer = createSlice({
     name: "FSUIPCSlicer",
     initialState,
     reducers: {
+        setConnectionLoading : (state: State, action: PayloadAction<boolean>) => {
+            state.connectionLoading = action.payload;
+        },
         setConnected : (state: State, action: PayloadAction<boolean>) => {
             state.connected = action.payload;
         },
         setStateName: (state: State, action: PayloadAction<string>) => {
             state.stateName = action.payload;
         },
-        setInstance: (state: State, action: PayloadAction<any>) => {
-            state.instance = action.payload;
+        setErrorInfo: (state: State, action: PayloadAction<string>) => {
+            state.errorInfo = action.payload;
         },
-
     },
 });
 
-export const { setConnected, setStateName, setInstance } = FSUIPCSlicer.actions;
+export const { setConnectionLoading, setConnected, setStateName, setErrorInfo } = FSUIPCSlicer.actions;
 export default FSUIPCSlicer.reducer;

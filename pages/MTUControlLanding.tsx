@@ -6,6 +6,7 @@ import { Box, Button, Grid, Paper, styled, Table, TableHead, TableBody, TableCon
 
 import generalTexts from '../data/GeneralTexts';
 import { startServiceConnections } from '../data/RunServiceConState';
+import CheckServiceConnectionSpinner from '../data/CheckServiceConnectionSpinner';
 
 // Import external files 
 //import { ExtTableBodyView, ExtTableHead, ExtStyleCompilationView, ExtStyleHeader } from '../data/PathForFilesFolder';
@@ -47,28 +48,36 @@ var MTUControlLanding = ()=>{
         }
     }
 
-    console.log(getStoreServiceFSUIPCData);
-
     return(
         <>
             {appName}
-            <Box sx={{border: "1px solid red", width: "100%", height: "100vh", display: "flex", flexDirection: "column", textAlign: "center"}}>
+            <Box sx={{width: "100%", display: "flex", flexDirection: "column", textAlign: "center"}}>
                 <Box>{getStoreAppStartData["conState"]}</Box>
                 <Box sx={{border: "1px solid red", display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
                     {(appStarted !== false) 
                         ?
-                            <Box sx={{border: "1px solid red", display: "flex", flexDirection: "row"}} key={getStoreServiceFSUIPCData["name"]}>                               
-                                <Box sx={{width: "150px", height: "2vh", color: "white", backgroundColor: getStoreServiceFSUIPCData["connected"] === true ? "green" : "red"}} key={"3r2r"}>
-                                    {getStoreServiceFSUIPCData["connected"] === true ? getStoreServiceFSUIPCData["stateName"] : generalTexts.conStates.state["notStarted"]}
-                                </Box> 
-
+                            <Box sx={{border: "1px solid red", display: "flex", flexDirection: "column", alignItems: "center"}} key={getStoreServiceFSUIPCData["name"]}>                                    
+                                <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
+                                    <Box sx={{width: "100px", marginLeft: "25px"}}>FSUIPC -</Box>
+                                    <Box sx={{width: "150px", display: "flex", flexDirection: "row", justifyContent: "space-around", color: "white", backgroundColor: getStoreServiceFSUIPCData["connected"] === true ? "green" : "red"}} key={"3r2r"}>
+                                        {/*<Box sx={{marginTop: "2px"}}>{generalTexts.conStates.state["serviceString"]}</Box>*/}
+                                        <CheckServiceConnectionSpinner/>
+                                    </Box> 
+                                </Box>  
+                                 
+                                <Button sx={{width: "200px", marginTop: "12px", display: "flex", flexDirection: "row", justifyContent: "center"}} onClick={triggerConState} variant="contained" id={conButton}>
+                                    {(getStoreServiceFSUIPCData["connectionLoading"] === false)
+                                        ? conButton
+                                        : <><span className="spinner-border spinner-border-sm"></span><span className="marginLeft: 10px">Loading...</span></>          
+                                    }
+                                </Button>
                             </Box>
+
                         : "wdqa"                        
                     }
+                    </Box>
                 </Box>
                 <Box>
-                    <Button sx={{width: "200px"}} onClick={triggerConState} variant="contained" id={conButton}>{conButton}</Button>
-                </Box>
             </Box>
         </>
     );
