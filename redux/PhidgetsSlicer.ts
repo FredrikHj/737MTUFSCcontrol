@@ -16,7 +16,7 @@ interface State {
 }
 
 const initialState: State = {
-    name: "FSUIPC",
+    name: "Phidgets",
     connectionLoading: false,
     connected: false,
     stateName: generalTexts.conStates.fsuipc.webService["notStarted"],
@@ -28,8 +28,8 @@ const initialState: State = {
     },
 };
 
-export const FSUIPCSlicer = createSlice({
-    name: "FSUIPCSlicer",
+export const PhidgetsSlicer = createSlice({
+    name: "PhidgetsSlicer",
     initialState,
     reducers: {
         setConnectionLoading : (state: State, action: PayloadAction<boolean>) => {
@@ -53,5 +53,5 @@ export const FSUIPCSlicer = createSlice({
     },
 });
 
-export const { setConnectionLoading, setConnected, setStateName, setErrorInfo, setConnectionInfo, setTestObj } = FSUIPCSlicer.actions;
-export default FSUIPCSlicer.reducer;
+export const { setConnectionLoading, setConnected, setStateName, setErrorInfo, setConnectionInfo, setTestObj } = PhidgetsSlicer.actions;
+export default PhidgetsSlicer.reducer;

@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { AppStartSlicer } from './redux/appStartSlicer';
 import { FSUIPCSlicer } from './redux/FSUIPCSlicer';
-import { ServerInstancesSlicer } from './redux/ServerInstancesSlicer';
+import { PhidgetsSlicer } from './redux/PhidgetsSlicer';
 
 export const store = configureStore({
     reducer: {
         appStart: AppStartSlicer.reducer,
         serviceFSUIPCS: FSUIPCSlicer.reducer,    
+        servicePhidgets: PhidgetsSlicer.reducer,    
     },
 })
 

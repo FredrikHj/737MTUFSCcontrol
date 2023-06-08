@@ -2,10 +2,9 @@
 Imports module */
 import axios from 'axios';
 import { store } from "../store";
-import { setConnectionLoading, setConnected, setStateName, setErrorInfo } from '../redux/FSUIPCSlicer';
-import { setFsuipcServer } from '../redux/ServerInstancesSlicer';
+import { setConnectionLoading, setConnected, setStateName, setErrorInfo, setConnectionInfo, setTestObj} from '../redux/FSUIPCSlicer';
 import generalTexts from './GeneralTexts'; 
-
+import { testCommand } from './FSUIPC/RunCommandsResponse';
 /*
 import {
     setAutostorePickData,
@@ -20,64 +19,72 @@ var runConServers: {fsuipc: any} = {
         console.log(mode);
         if(mode === "opened"){
             fsuipcWs = new WebSocket(`ws://localhost:2048/fsuipc/`, "fsuipc");
-            console.log('fsuipcWs :', fsuipcWs);
-            checkIfConnected.fsuipc(fsuipcWs);
+            store.dispatch(setConnectionLoading(true)); 
             
             if(fsuipcWs !== null){
-                fsuipcWs.onopen = () => {
-                    /*The following code will create a simple request with the command about.read. This will get various information about the WebSocket Server and Flight Sim (if connected).
-                    This is a simple command that requires no extra properties.*/
-                    var request = {
-                        command: 'about.read',
-                        name: 'about'
-                    };
-                    
-                    store.dispatch(setConnectionLoading(true)); 
-                    
-                    fsuipcWs.send(JSON.stringify(request));
-                    //store.dispatch(setConnected(true)); 
-                    //store.dispatch(setStateName(generalTexts.conStates.state["started"]));              
-                   
-            
-            
-            
-                }
-            if(!fsuipcWs.onerror){
-                
-                }
-
+                console.log('onopen :');
+                    fsuipcWs.onopen = () => {
+                        checkIfConnected.fsuipc(fsuipcWs);         
+                    }
+                    if(!fsuipcWs.onerror){
+                        
+                    }                    
             } else {
                 fsuipcWs.onerror = function () {
                     store.dispatch(setConnected(false)); 
-                    store.dispatch(setStateName(generalTexts.conStates.state.serverError["name"]));
-                    store.dispatch(setErrorInfo(generalTexts.conStates.state.serverError["type"][0]));
+                    store.dispatch(setStateName(generalTexts.conStates.fsuipc.serverError["name"]));
+                    store.dispatch(setErrorInfo(generalTexts.conStates.fsuipc.serverError["type"][0]));
 
                 }
             }
-            } 
-            if(mode === "closed") {
-                fsuipcWs.close();
-                fsuipcWs.onclose = () => {
-                    store.dispatch(setConnected(false)); 
-                    store.dispatch(setStateName(generalTexts.conStates.state["notStarted"]));
-                    fsuipcWs = null;
-                }
+        } 
+        if(mode === "closed") {
+            fsuipcWs.close();
+            fsuipcWs.onclose = () => {
+                store.dispatch(setConnectionInfo({})); 
+                store.dispatch(setConnected(false)); 
+                store.dispatch(setConnectionLoading(false)); 
+                store.dispatch(setStateName(generalTexts.conStates.fsuipc.webService["notStarted"]));
+                store.dispatch(setTestObj({
+                    received: false,
+                    data: {},
+                }));
+                fsuipcWs = null;
             }
-        },
+            
+        }
+    },
 }
 var checkIfConnected = {
     fsuipc: (serverInstance: any) => {
-        serverInstance.onmessage
+        /*The following code will create a simple request with the command about.read. 
+        This will get various information about the WebSocket Server and Flight Sim (if connected).
+        This is a simple command that is just checking the connection is established */
+
+        var request = {
+            command: 'about.read',
+            name: 'about'
+        };
+    
+        fsuipcWs.send(JSON.stringify(request));
         serverInstance.onmessage = (msg: any) => {
             // parse the JCON string to a Javascript object
             var response = JSON.parse(msg.data);
             console.log(response);
+            if(response.success === true){
+                setTimeout(() => {
+                    store.dispatch(setConnectionInfo(response)); 
+                    store.dispatch(setConnected(true)); 
+                    store.dispatch(setConnectionLoading(false)); 
+                    store.dispatch(setStateName(generalTexts.conStates.fsuipc.webService["started"]));
+                    testCommand(fsuipcWs);
+                }, 2000);
+            }      
         };
     },
 };
-
 export const startServiceConnections = (runMode: string) =>{ 
     if(runMode === generalTexts.conButton["connect"]) return runConServers["fsuipc"]("opened");  
     if(runMode === generalTexts.conButton["disconnect"]) return runConServers["fsuipc"]("closed");  
-    
 }
+export default fsuipcWs;

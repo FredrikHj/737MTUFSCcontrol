@@ -1,14 +1,29 @@
 var generalTexts: {
     services: {
         fsuipc: string,
+        phidgets: string,
     },
     conStates: { 
         headline: string,
-        state: {
-            serviceString: string,
-            notStarted: string,
-            started: string, 
-            closed: string,
+        fsuipc: {
+            webService: {
+                notStarted: string,
+                serviceLoading: string,
+                started: string, 
+                closed: string,
+            },
+            serverError: {
+                name: string, 
+                type: Array<string>,
+            }
+        },
+        phidgets: {
+            webService: {
+                notStarted: string,
+                serviceLoading: string,
+                started: string, 
+                closed: string,
+            },
             serverError: {
                 name: string, 
                 type: Array<string>,
@@ -22,14 +37,29 @@ var generalTexts: {
 } = {
     services: {
         fsuipc: "fsuipc",
+        phidgets: "phidgets",
     },
     conStates: {
         headline: "Connenction Status",
-        state: {
-            serviceString: "Service",
-            notStarted: "Service Not Started",
-            started: "Service Started",
-            closed: "Connection Closed",
+        fsuipc: {
+            webService: {
+                notStarted: "service Not Started",
+                serviceLoading: "service Is Loading...",
+                started: "service Started",
+                closed: "Connection Closed",
+            },
+            serverError: {
+                name: "Connection Error",
+                type: ["Program / Server Closed", "WebSocket Error", "Network Error"],
+            },
+        },
+        phidgets: {
+            webService: {
+                notStarted: "service Not Started",
+                serviceLoading: "service Is Loading...",
+                started: "service Started",
+                closed: "Connection Closed",
+            },
             serverError: {
                 name: "Connection Error",
                 type: ["Program / Server Closed", "WebSocket Error", "Network Error"],

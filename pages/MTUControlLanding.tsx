@@ -1,12 +1,14 @@
 /* ================================================== Input Form ==================================================
 Import  modules */
+import { store } from "../store";
 import { useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Grid, Paper, styled, Table, TableHead, TableBody, TableContainer, Typography } from '@mui/material';
 
 import generalTexts from '../data/GeneralTexts';
 import { startServiceConnections } from '../data/RunServiceConState';
-import CheckServiceConnectionSpinner from '../data/CheckServiceConnectionSpinner';
+import ImportServices from '../data/ImportServices';
+import { setConnectionLoading } from '../redux/FSUIPCSlicer';
 
 // Import external files 
 //import { ExtTableBodyView, ExtTableHead, ExtStyleCompilationView, ExtStyleHeader } from '../data/PathForFilesFolder';
@@ -43,7 +45,7 @@ var MTUControlLanding = ()=>{
             updateConButton(generalTexts.conButton["disconnect"]);
         }
         if(targetButton === generalTexts.conButton["disconnect"]) {
-            startServiceConnections(targetButton);
+            startServiceConnections(targetButton);            
             updateConButton(generalTexts.conButton["connect"]);
         }
     }
@@ -56,19 +58,12 @@ var MTUControlLanding = ()=>{
                 <Box sx={{border: "1px solid red", display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
                     {(appStarted !== false) 
                         ?
-                            <Box sx={{border: "1px solid red", display: "flex", flexDirection: "column", alignItems: "center"}} key={getStoreServiceFSUIPCData["name"]}>                                    
-                                <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center"}}>
-                                    <Box sx={{width: "100px", marginLeft: "25px"}}>FSUIPC -</Box>
-                                    <Box sx={{width: "150px", display: "flex", flexDirection: "row", justifyContent: "space-around", color: "white", backgroundColor: getStoreServiceFSUIPCData["connected"] === true ? "green" : "red"}} key={"3r2r"}>
-                                        {/*<Box sx={{marginTop: "2px"}}>{generalTexts.conStates.state["serviceString"]}</Box>*/}
-                                        <CheckServiceConnectionSpinner/>
-                                    </Box> 
-                                </Box>  
-                                 
+                            <Box sx={{border: "1px solid red", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}} key={getStoreServiceFSUIPCData["name"]}>                                    
+                             <ImportServices service={"fsuipc"}/>
                                 <Button sx={{width: "200px", marginTop: "12px", display: "flex", flexDirection: "row", justifyContent: "center"}} onClick={triggerConState} variant="contained" id={conButton}>
-                                    {(getStoreServiceFSUIPCData["connectionLoading"] === false)
-                                        ? conButton
-                                        : <><span className="spinner-border spinner-border-sm"></span><span className="marginLeft: 10px">Loading...</span></>          
+                                    {(getStoreServiceFSUIPCData["connectionLoading"] === true)
+                                        ? <><span className="spinner-border spinner-border-sm"></span><span className="marginLeft: 10px" onClick={triggerConState} id={conButton}>Loading...</span></>          
+                                        : conButton
                                     }
                                 </Button>
                             </Box>
