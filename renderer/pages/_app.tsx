@@ -2,7 +2,6 @@ import React from 'react';
 import Head from 'next/head';
 import type {AppProps} from 'next/app';
 
-import {CssBaseline, ThemeProvider} from '@mui/material';
 import theme from '../lib/theme';
 import type {EmotionCache} from "@emotion/cache";
 import createEmotionCache from '../lib/create-emotion-cache';
@@ -27,10 +26,7 @@ function MyApp(props: MyAppProps) {
                     <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
                 </Head>
                 <Provider store={ initializeStore }>
-                    <ThemeProvider theme={theme}>
-                        <CssBaseline/>
-                        <Component {...pageProps} />
-                    </ThemeProvider>
+                    <Component {...pageProps} />
                 </Provider>
             </CacheProvider>
     )

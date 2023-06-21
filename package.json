@@ -18,8 +18,7 @@
     "electron-redux": "^1.5.4",
     "electron-serve": "^1.1.0",
     "electron-store": "^8.1.0",
-    "fsuipc": "^0.6.0",
-    "phidgets": "^0.5.12",
+    "phidget22": "^3.15.3",
     "react-redux": "^8.1.0",
     "redux": "^4.2.1"
   },

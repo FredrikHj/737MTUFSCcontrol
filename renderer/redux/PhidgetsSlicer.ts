@@ -4,8 +4,7 @@ import { CSSOthersObjectForCSSObject } from '@mui/styled-engine';
 
 interface State {
     name: string,
-    connectionLoading: boolean,
-    connected: boolean,
+    phidgetsConnected: boolean,
     stateName: string,
     errorInfo: string,
     connectionInfo: object,
@@ -17,10 +16,9 @@ interface State {
 
 const initialState: State = {
     name: "Phidgets",
-    connectionLoading: false,
-    connected: false,
+    phidgetsConnected: false,
     stateName: generalTexts.conStates.fsuipc.webService["notStarted"],
-    errorInfo: "",
+    errorInfo: "No Errors",
     connectionInfo: {},
     testObj: {
         received: false,
@@ -32,11 +30,8 @@ export const PhidgetsSlicer = createSlice({
     name: "PhidgetsSlicer",
     initialState,
     reducers: {
-        setConnectionLoading : (state: State, action: PayloadAction<boolean>) => {
-            state.connectionLoading = action.payload;
-        },
-        setConnected : (state: State, action: PayloadAction<boolean>) => {
-            state.connected = action.payload;
+        setPhidgetsConnected : (state: State, action: PayloadAction<boolean>) => {
+            state.phidgetsConnected = action.payload;
         },
         setStateName: (state: State, action: PayloadAction<string>) => {
             state.stateName = action.payload;
@@ -53,5 +48,5 @@ export const PhidgetsSlicer = createSlice({
     },
 });
 
-export const { setConnectionLoading, setConnected, setStateName, setErrorInfo, setConnectionInfo, setTestObj } = PhidgetsSlicer.actions;
+export const { setPhidgetsConnected, setStateName, setErrorInfo, setConnectionInfo, setTestObj } = PhidgetsSlicer.actions;
 export default PhidgetsSlicer.reducer;

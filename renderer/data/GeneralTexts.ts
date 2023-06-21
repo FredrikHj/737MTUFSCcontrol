@@ -1,5 +1,5 @@
 var generalTexts: {
-    service: {
+    services: {
         fsuipc: string,
         phidgets: string,
     },
@@ -35,7 +35,7 @@ var generalTexts: {
         disconnect: string,
     },
 } = {
-    service: {
+    services: {
         fsuipc: "fsuipc",
         phidgets: "phidgets",
     },
