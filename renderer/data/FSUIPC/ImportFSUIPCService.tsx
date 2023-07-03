@@ -5,7 +5,7 @@ import { Box, Button, Grid, Paper, styled, Table, TableHead, TableBody, TableRow
 import { useSelector } from 'react-redux';
 
 import FSUIPCInfoContainer from './FSUIPCInfoContainer';
-import {runServiceFsuipcConnection} from './RunFSUIPCWebSocketConnect';
+import { runServiceFsuipcConnect } from "./RunFSUIPCWebSocketConnect";
  
 import generalTexts from '../GeneralTexts';
 
@@ -28,11 +28,11 @@ var ImportFSUIPCService = ()=>{
         var targetButton = e.target.id;
         console.log('targetButton :', targetButton);
         if(targetButton === generalTexts.conButton["connect"]) {
-            runServiceFsuipcConnection("opened");
+            runServiceFsuipcConnect("opened");
             updateConButton(generalTexts.conButton["disconnect"]);
         }
         if(targetButton === generalTexts.conButton["disconnect"]) {
-            runServiceFsuipcConnection("closed");            
+            runServiceFsuipcConnect("closed");            
             updateConButton(generalTexts.conButton["connect"]);
         }
     }

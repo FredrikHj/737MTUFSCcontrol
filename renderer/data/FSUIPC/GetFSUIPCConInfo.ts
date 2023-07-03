@@ -1,7 +1,7 @@
 import { initializeStore } from "../../store";
 import generalTexts from '../GeneralTexts'; 
 
-import { setConnectionLoading, setFSUIPCConnected, setStateName, setErrorInfo, setConnectionInfo } from '../../redux/FSUIPCSlicer';
+import { setFSUIPCConnected, setStateName, setErrorInfo, setConnectionInfo } from '../../redux/FSUIPCSlicer';
 import VariousFSUIPCCommands from './FSUIPCCommandsObj';
 
 var FSUIPCCheckIfConnected = (serverInstance: any) => {

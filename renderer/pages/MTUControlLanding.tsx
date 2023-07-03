@@ -45,7 +45,7 @@ var MTUControlLanding = ()=>{
                 updatedStateTree !== checkReduxStoreTree() &&
                     updateUpdatedStateTree(checkReduxStoreTree());
                     updatedStateTree !== null && updateConButton(updatedStateTree.appStart["labelConButton"]);
-        }, 2000);
+            }, 2000);
     }, [updatedStateTree, getStoreAppStartData, appStarted, isServicesLoading, conButton]);
 
     console.log("updatedStateTree :", updatedStateTree);

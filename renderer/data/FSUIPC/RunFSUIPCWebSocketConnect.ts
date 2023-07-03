@@ -13,29 +13,24 @@ var fsuipcInstance: any = null;
 export var runServiceFsuipcConnect = (runMode: string) =>{
     if(runMode === "opened"){
         fsuipcInstance = new WebSocket(`ws://localhost:2048/fsuipc/`, "fsuipc");
-        console.log('WebSocket :', fsuipcInstance);
-        // Check if the websocket is connected
-            if(fsuipcInstance.onmessage !== null){
-                initializeStore.dispatch(setFSUIPCConnected(true));
-                initializeStore.dispatch(setStateName(generalTexts.conStates.fsuipc.webService["started"]));
-                
-                console.log('onopen :');
+        console.log('fsuipcInstance :', fsuipcInstance.readyState);
+        if(fsuipcInstance.readyState === 0 || fsuipcInstance.readyState === 1){
+            initializeStore.dispatch(setFSUIPCConnected(true));
+            initializeStore.dispatch(setStateName(generalTexts.conStates.fsuipc.webService["started"]));
+            
+            console.log('onopen :');
 
-                fsuipcInstance.onopen = () =>{getFSUIPCConInfo(fsuipcInstance);}       
-                if(!fsuipcInstance.onerror){
-                    
-                }                    
-                else {
-                    fsuipcInstance.onerror = function () {
-                        console.log('onerror :', onerror);
-                        initializeStore.dispatch(setStateName(generalTexts.conStates.fsuipc.serverError["name"]));
-                        initializeStore.dispatch(setErrorInfo(generalTexts.conStates.fsuipc.serverError["type"][0]));
-                    }
-                }
-            } else {
-                initializeStore.dispatch(setFSUIPCConnected(false));
-                initializeStore.dispatch(setStateName(generalTexts.conStates.fsuipc.webService["closed"]));
+            fsuipcInstance.onopen = () =>{getFSUIPCConInfo(fsuipcInstance);}       
+            if(!fsuipcInstance.onerror){
+                
+            }                    
+        } 
+        else {
+                fsuipcInstance.onerror = function () {
+                initializeStore.dispatch(setStateName(generalTexts.conStates.fsuipc.serverError["name"]));
+                initializeStore.dispatch(setErrorInfo(generalTexts.conStates.fsuipc.serverError["type"][0]));
             }
+        }
     } 
     if(runMode === "closed") {
         fsuipcInstance.close();
