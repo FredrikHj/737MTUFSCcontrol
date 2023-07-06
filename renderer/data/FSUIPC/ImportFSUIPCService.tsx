@@ -1,51 +1,51 @@
-/* ================================================== Input Form ==================================================
+/* ================================================== Import FSUIPCService ==================================================
 Import  modules */
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Grid, Paper, styled, Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
+import checkReduxStoreTree from "../CheckStoreState";
 import FSUIPCInfoContainer from './FSUIPCInfoContainer';
-import { runServiceFsuipcConnect } from "./RunFSUIPCWebSocketConnect";
- 
+import { loadFsuipcService } from "./LoadFsuipcService";
+
 import generalTexts from '../GeneralTexts';
-
-// Import external files 
-//import { ExtTableBodyView, ExtTableHead, ExtStyleCompilationView, ExtStyleHeader } from '../data/PathForFilesFolder';
-
-//import { muiLayot, muiComponents, muiFeedback } from '../data/muiHandler';
-import { setTimeout } from 'timers';
 import { log } from 'console';
 
+
 var ImportFSUIPCService = ()=>{
-    var getStoreAppStart: any = useSelector((state: any) => state["appStart"]);
-    var getStoreServiceData: any = useSelector((state: any) => state["serviceFSUIPC"]);
+    var storeListenerAppStart: any = checkReduxStoreTree("appStart");
+    var storeListenerServiceFSUIPC: any = checkReduxStoreTree("serviceFSUIPC");
+
     const [ conButton, updateConButton] = useState<string>(generalTexts.conButton["connect"]);
 
     useEffect(() => {
 
-    },[]);
-    var triggerConState = (e: any) => {
+    },[storeListenerServiceFSUIPC]);
+    var triggerConState = (e: any) => { 
         var targetButton = e.target.id;
         console.log('targetButton :', targetButton);
         if(targetButton === generalTexts.conButton["connect"]) {
-            runServiceFsuipcConnect("opened");
+            loadFsuipcService("connect");
             updateConButton(generalTexts.conButton["disconnect"]);
         }
         if(targetButton === generalTexts.conButton["disconnect"]) {
-            runServiceFsuipcConnect("closed");            
+            loadFsuipcService("disconnect");            
             updateConButton(generalTexts.conButton["connect"]);
         }
     }
+    console.log(storeListenerServiceFSUIPC);
+    
     return (
       <Box
         sx={{
+          border: "1px solid red",
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
         }}
       >
-        {
+        
           <Box
             sx={{
               display: "flex",
@@ -54,65 +54,32 @@ var ImportFSUIPCService = ()=>{
               alignItems: "center",
             }}
           >
-            <Box sx={{ width: "300px" }}>
-              {generalTexts.services["fsuipc"].toUpperCase()}
+
+            <Box sx={{
+              width: "300px"
+            }}>
+              
             </Box>
 
-            <Box
-              sx={{
+
+
+
+            <Box sx={{
                 width: "100%",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "space-around",
                 alignItems: "center",
               }}
-            >
-              <Box
-                sx={{
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "center",
-                  color: "white",
-                  backgroundColor:
-                    getStoreServiceData["FSUIPCConnected"] === true
-                      ? "green"
-                      : "red",
-                }}
-                key={"3r2r"}
-              >
-                {[
-                  getStoreServiceData["FSUIPCConnected"] === false &&
-                    getStoreAppStart["connectionLoading"] === false && (
-                      <Box>
-                        Web{" "}
-                        {generalTexts.conStates.fsuipc.webService["notStarted"]}
-                      </Box>
-                    ),
-                  getStoreServiceData["FSUIPCConnected"] === false &&
-                    getStoreAppStart["connectionLoading"] === true && (
-                      <Box>
-                        Web{" "}
-                        {
-                          generalTexts.conStates.fsuipc.webService[
-                            "serviceLoading"
-                          ]
-                        }
-                      </Box>
-                    ),
-                  getStoreServiceData["FSUIPCConnected"] === true &&
-                    getStoreAppStart["connectionLoading"] === false && (
-                      <Box>
-                        Web{" "}
-                        {generalTexts.conStates.fsuipc.webService["started"]}
-                      </Box>
-                    ),
-                ]}
-              </Box>
-              <FSUIPCInfoContainer />
+             >
+
+              {(storeListenerServiceFSUIPC.connectionInfo["dataReceived"] === true) 
+                ? <FSUIPCInfoContainer />
+                : "Connection Data is Loading ..."
+              }
             </Box>
           </Box>
-        }
+        
       </Box>
     );
 }

@@ -3,11 +3,14 @@ Import  modules */
 import React, { useState, useEffect } from 'react';
 import { Box, Button, Grid, Paper, styled, Table, TableHead, TableBody, TableRow, TableCell, TableContainer, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
+import checkReduxStoreTree from "../CheckStoreState";
+
 import { log } from 'console';
 
 var FSUIPCInfoContainer = () => {
+    var storeListenerServiceFSUIPC: any = checkReduxStoreTree("serviceFSUIPC");
+    
     var getStoreService: any = useSelector((state: any) => state["serviceFSUIPC"]);
-    var getConnectionInfoData: any = getStoreService.connectionInfo["data"];
     const [ receivedData, updateReceivedData ] = useState<any>(false);
     
 
@@ -29,25 +32,13 @@ var FSUIPCInfoContainer = () => {
             }, err => {
             console.log(err); // Error: “Promise rejected”
         });
-        
-        /*
-        const consumerWaiter = new Promise((result: any, error: any) =>{
-            if(getStoreServiceFSUIPC.testObj["received"] === true ){
-            console.log('getStoreServiceFSUIPC.testObj["received"] :', getStoreServiceFSUIPC.testObj["received"]);
-                result("true");
-            }
-        }) 
-        consumerWaiter.then(value => {
-            console.log('value :', value);
-            value === "true" ? updateReceivedData(value) : updateReceivedData("No data")
-        })
-        */ 
-    }, [getStoreService, getConnectionInfoData, receivedData]);
+
+    }, [getStoreService, receivedData]);
     console.log(receivedData); 
     
     return(
         <>
-            {(getStoreService["connected"] === true) &&
+            {(storeListenerServiceFSUIPC.connectionInfo["dataReceived"] === true) &&
                 <>
                     <TableContainer>
                         <Table>
@@ -56,7 +47,7 @@ var FSUIPCInfoContainer = () => {
                                     <TableCell sx={{textAlign: "center"}} colSpan={2}>
                                         FlightSim Info
                                     </TableCell>
-                                    
+                                     
                                     <TableCell>
                                         
                                     </TableCell>
@@ -74,7 +65,7 @@ var FSUIPCInfoContainer = () => {
 
                                     <TableCell>
                                         <>
-                                            {getConnectionInfoData["isConnectionOpen"] === true ? "yes" : "No"}
+                                            {storeListenerServiceFSUIPC["isConnectionOpen"] === true ? "yes" : "No"}
                                         </>
                                     </TableCell>
                                     <TableCell>
@@ -83,7 +74,7 @@ var FSUIPCInfoContainer = () => {
                                         FSUIPC WebSocket Server Version
                                     </TableCell>
                                     <TableCell>
-                                        {getConnectionInfoData["FSUIPCWebSocketServerVersion"]}
+                                        {storeListenerServiceFSUIPC["FSUIPCWebSocketServerVersion"]}
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
@@ -91,7 +82,7 @@ var FSUIPCInfoContainer = () => {
                                         FlightSim
                                     </TableCell>
                                     <TableCell>
-                                        {getConnectionInfoData["flightSim"] === null ? "No Info" : getConnectionInfoData["flightSim"]}
+                                        {storeListenerServiceFSUIPC["flightSim"] === null ? "No Info" : storeListenerServiceFSUIPC["flightSim"]}
                                     </TableCell>
                                     <TableCell>
                                     </TableCell>
@@ -99,7 +90,7 @@ var FSUIPCInfoContainer = () => {
                                         FSUIPCVersion
                                     </TableCell>
                                     <TableCell>
-                                        {getConnectionInfoData["FSUIPCVersion"] === null ? "No Info" : getConnectionInfoData["FSUIPCVersion"]}
+                                        {storeListenerServiceFSUIPC["FSUIPCVersion"] === null ? "No Info" : storeListenerServiceFSUIPC["FSUIPCVersion"]}
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
@@ -107,7 +98,7 @@ var FSUIPCInfoContainer = () => {
                                         FlightSimVersion Code
                                     </TableCell>
                                     <TableCell>
-                                        {getConnectionInfoData["flightSimVersionCode"]}
+                                        {storeListenerServiceFSUIPC["flightSimVersionCode"]}
                                     </TableCell>
                                     <TableCell>
                                     </TableCell>
@@ -115,7 +106,7 @@ var FSUIPCInfoContainer = () => {
                                         Update is Available?
                                     </TableCell>
                                     <TableCell>
-                                        {getConnectionInfoData["newServerVersionAvailable"] === true ? "yes" : "No"}
+                                        {storeListenerServiceFSUIPC["newServerVersionAvailable"] === true ? "yes" : "No"}
                                     </TableCell>
                                 </TableRow>
                                 <TableRow>
@@ -123,7 +114,7 @@ var FSUIPCInfoContainer = () => {
                                         FlightSim Version
                                     </TableCell>
                                     <TableCell>
-                                        {getConnectionInfoData["flightSimVersionText"]  === null ? "No Info" : getConnectionInfoData["flightSimVersionText"]}
+                                        {storeListenerServiceFSUIPC["flightSimVersionText"]  === null ? "No Info" : storeListenerServiceFSUIPC["flightSimVersionText"]}
                                     </TableCell>
                                     <TableCell>
                                     </TableCell>
@@ -131,7 +122,7 @@ var FSUIPCInfoContainer = () => {
                                         WideClient Connection?
                                     </TableCell>
                                     <TableCell>
-                                        {getConnectionInfoData["isConnectedToWideClient"] === true ? "yes" : "No"}
+                                        {storeListenerServiceFSUIPC["isConnectedToWideClient"] === true ? "yes" : "No"}
                                     </TableCell>
                                 </TableRow>
                             </TableBody>

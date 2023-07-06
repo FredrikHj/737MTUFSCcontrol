@@ -3,6 +3,7 @@ import installExtension, { REDUX_DEVTOOLS } from 'electron-devtools-installer';
 
 import serve from 'electron-serve';
 import { createWindow } from './helpers';
+import { log } from 'console';
 
 const isProd: boolean = process.env.NODE_ENV === 'production';
 
@@ -29,6 +30,7 @@ if (isProd) {
   }
 })();
 app.whenReady().then(() => {
+  
     installExtension(REDUX_DEVTOOLS)
         .then((name) => console.log(`Added Extension:  ${name}`))
         .catch((err) => console.log('An error occurred: ', err));

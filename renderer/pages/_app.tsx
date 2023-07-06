@@ -19,6 +19,7 @@ type MyAppProps = AppProps & {
 
 function MyApp(props: MyAppProps) {
     const {Component, pageProps, emotionCache = clientSideEmotionCache} = props;
+    console.log('MyApp :', initializeStore);
 
     return (
         <CacheProvider value={emotionCache}>
@@ -26,7 +27,7 @@ function MyApp(props: MyAppProps) {
                     <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
                 </Head>
                 <Provider store={ initializeStore }>
-                    <Component {...pageProps} />
+                    <Component {...pageProps} /> 
                 </Provider>
             </CacheProvider>
     )

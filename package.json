@@ -8,7 +8,8 @@
   "scripts": {
     "dev": "nextron",
     "build": "nextron build",
-    "postinstall": "electron-builder install-app-deps"
+    "postinstall": "electron-builder install-app-deps",
+    "redux-devtools": "redux-devtools --hostname=localhost --port=8000"
   },
   "dependencies": {
     "@mui/joy": "^5.0.0-alpha.84",
@@ -28,6 +29,7 @@
     "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.10.8",
+    "@redux-devtools/cli": "^2.0.0",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
     "electron": "^21.3.3",

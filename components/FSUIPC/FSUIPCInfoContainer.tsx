@@ -13,7 +13,6 @@ var FSUIPCInfoContainer = () => {
 
     
     useEffect(() => {
-
         var consumerWaiter = new Promise((resolve, reject) => {
             if (getStoreServiceFSUIPC.testObj["received"] === true) {
                 resolve(getStoreServiceFSUIPC.testObj.data["isConnectionOpen"]);
@@ -47,7 +46,7 @@ var FSUIPCInfoContainer = () => {
     
     return(
         <>
-            {(getStoreServiceFSUIPC["connected"] === true) &&
+            {(getStoreServiceFSUIPC["FSUIPCConnected"] === true) &&
                 <>
                     <TableContainer>
                         <Table>

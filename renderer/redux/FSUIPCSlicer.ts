@@ -14,7 +14,9 @@ const initialState: State = {
     FSUIPCConnected: false,
     stateName: generalTexts.conStates.fsuipc.webService["notStarted"],
     errorInfo: "No Errors",
-    connectionInfo: {},
+    connectionInfo: {
+        dataReceived: false,
+    },
 };
 
 export const FSUIPCSlicer = createSlice({

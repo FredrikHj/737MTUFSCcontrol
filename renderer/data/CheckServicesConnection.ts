@@ -2,29 +2,17 @@
 Import  modules */
 import { initializeStore } from "../store";
 
-import {
-  setConnectionLoading,
-  setConnected,
-  setLabelConButton,
-} from "../redux/appStartSlicer";
-import generalTexts from './GeneralTexts'; 
-  import checkReduxStoreTree, {
-} from "./HandleStoreUpdate";
-
-
+import checkReduxStoreTree, {
+} from "./CheckStoreState";
 
 //initializeStore.subscribe(handleStateChange)
 var checkServicesConnection = () =>{
-  var storeStateTree: any = checkReduxStoreTree();
-  console.log('storeStateTree :', storeStateTree);
+  var storeListenerServiceFSUIPC: any = checkReduxStoreTree("serviceFSUIPC");
+  console.log('storeStateTree :', storeListenerServiceFSUIPC);
   
-  var isFSUIPCConnected: boolean = storeStateTree.serviceFSUIPC["FSUIPCConnected"];
-  if(isFSUIPCConnected === true) setServicesConnect();
+  var isFSUIPCConnected: boolean = storeListenerServiceFSUIPC["FSUIPCConnected"];
+  console.log('isFSUIPCConnected :', isFSUIPCConnected);
+  //if(isFSUIPCConnected === true) setIfServicesConnect();
 }
-var setServicesConnect = () =>{    
-  // If all services are connected = run set these values to the store
-    initializeStore.dispatch(setConnectionLoading(false));
-    initializeStore.dispatch(setConnected(true)); 
-    initializeStore.dispatch(setLabelConButton(generalTexts.conButton["disconnect"]));
-}
+
 export default checkServicesConnection; //;
