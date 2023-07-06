@@ -9,6 +9,8 @@ export const initializeStore = configureStore({
         serviceFSUIPC: FSUIPCSlicer.reducer,    
         servicePhidgets: PhidgetsSlicer.reducer,    
     },
+    devTools: true,
+    preloadedState: undefined,
 })
 
 export type RootState = ReturnType<typeof initializeStore.getState>;

@@ -8,6 +8,7 @@ import checkReduxStoreTree, {
   handleStateChange,
 } from "../data/CheckStoreState";
 import loadMTUServices from '../data/LoadMTUServices';
+import LoadingIndicator from "../data/LoadingIndicator";
 
 import { Box, Button, Grid, Paper, styled, Table, TableHead, TableBody, TableContainer, Typography } from '@mui/material';
 
@@ -52,40 +53,47 @@ var MTUControlLanding = ()=>{
     console.log("storeListenerServiceFSUIPC :", storeListenerServiceFSUIPC);
       
     return( 
-        <Box sx={{width: "100%", display: "flex", flexDirection: "column", alignContent: "center"}}>
-            <Box sx={{width: "30%", display: "flex", flexDirection: "column", alignContent: "center"}}>
-                
-                <Box sx={{fontWeight: "bold", fontStretch: "10px" }}>
+        <Box sx={{border: "1px solid red", width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+           
+            <Box sx={{width: "50%", display: "flex", flexDirection: "column", alignContent: "center"}}>
+                <Box sx={{marginBottom: "10px", fontWeight: "bold", fontSize: "25px", letterSpacing: "20px", textDecoration: "underline"}}>
                     {generalTexts.services["fsuipc"].toUpperCase()}
                 </Box>
-                <Box
-                    sx={{
+                <Box sx={{
                         display: "flex",
                         flexDirection: "row",
-                        justifyContent: "space-between"
+                        justifyContent: "space-around"
                     }}>
-                    <Button id="fsuipc" onClick={loadMTUServices} variant="contained">
+                    <Button sx={{width: "150px"}}id="fsuipc" onClick={loadMTUServices} variant="contained">
                         {(storeListenerAppStart["connectionLoading"] === true)
-                            ? <><span className="spinner-border spinner-border-sm"></span><span className="marginLeft: 10px" onClick={loadMTUServices} id={conButton}>Loading...</span></>          
+                            ? <>
+                                <span className="spinner-border spinner-border-sm"></span><span className="marginLeft: 10px" onClick={loadMTUServices} id={conButton}>
+                                    <Box sx={{
+                                                display: "flex",
+                                                flexDirection: "row",
+                                                justifyContent: "space-around"
+                                            }}>
+                                        Loading <LoadingIndicator/>
+                                    </Box>
+                                </span></>          
                             : conButton
                         }
                     </Button>
-                
-                    <Box
-                        sx={{
-                            width: "50%",
-                            display: "flex",
-                            flexDirection: "row",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            color: "white",
-                            backgroundColor:
-                                storeListenerServiceFSUIPC["FSUIPCConnected"] === true
-                                ? "green"
-                                : "red",
-                        }}
-                        key={"3r2r"}
-                    >
+                        <Box
+                            sx={{
+                                width: "200px",
+                                display: "flex",
+                                flexDirection: "row",
+                                justifyContent: "center",
+                                alignItems: "center",
+                                color: "white",
+                                backgroundColor:
+                                    storeListenerServiceFSUIPC["FSUIPCConnected"] === true
+                                    ? "green"
+                                    : "red",
+                            }}
+                            key={"3r2r"}
+                        >
                         {[
                         storeListenerServiceFSUIPC["FSUIPCConnected"] === false && storeListenerAppStart["connectionLoading"] === false && (
                             <Box>
@@ -111,21 +119,14 @@ var MTUControlLanding = ()=>{
                         ),
                         ]}
                     </Box>
-                <Box>
-
-
-                </Box>
             </Box>
+            <ImportFSUIPCService/>
             
-            <Box sx={{display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-                
-                
-            <Box sx={{width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between"}}>                                    
-                    <ImportFSUIPCService/>
-                    <ImportPhidgetsService/>
-            </Box>
-                </Box>
+  
         </Box>
+            <Box>                                        
+                <ImportPhidgetsService/>
+            </Box>
     </Box>
     );
 }

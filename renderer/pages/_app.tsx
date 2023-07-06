@@ -16,6 +16,7 @@ import {initializeStore} from '../store';
 type MyAppProps = AppProps & {
     emotionCache?: EmotionCache;
 }
+import '../data/LoadingIndicator.css'; 
 
 function MyApp(props: MyAppProps) {
     const {Component, pageProps, emotionCache = clientSideEmotionCache} = props;
@@ -23,13 +24,13 @@ function MyApp(props: MyAppProps) {
 
     return (
         <CacheProvider value={emotionCache}>
-                <Head>
-                    <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
-                </Head>
-                <Provider store={ initializeStore }>
-                    <Component {...pageProps} /> 
-                </Provider>
-            </CacheProvider>
+            <Head>
+                <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
+            </Head>
+            <Provider store={ initializeStore }>
+                <Component {...pageProps} /> 
+            </Provider>
+        </CacheProvider>
     )
 }
 export default MyApp;

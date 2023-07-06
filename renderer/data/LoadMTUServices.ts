@@ -13,10 +13,10 @@ import { log } from 'console';
 var loadMTUServices = (e: any) => {
     var targetButton = e.target.id;
     console.log('targetButton :', targetButton);
-    if(targetButton === generalTexts.conButton["connect"]) {
+    if(targetButton === generalTexts.services["fsuipc"]) {
         //Common values for the app
-        initializeStore.dispatch(setConnectionLoading(true));
-        
+            initializeStore.dispatch(setConnectionLoading(true));
+
         // Connect to services
             // FSUIPC
                 // Just give the loading proccess to show
