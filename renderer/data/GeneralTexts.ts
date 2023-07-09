@@ -34,6 +34,9 @@ var generalTexts: {
         connect: string, 
         disconnect: string,
     },
+    mixedTexts: {
+        noData: string,
+    }
 } = {
     services: {
         fsuipc: "fsuipc",
@@ -44,7 +47,7 @@ var generalTexts: {
         fsuipc: {
             webService: {
                 notStarted: "service Not Started",
-                serviceLoading: "service Is Loading...",
+                serviceLoading: "service Is ",
                 started: "service Started",
                 closed: "Connection Closed",
             },
@@ -56,7 +59,7 @@ var generalTexts: {
         phidgets: {
             webService: {
                 notStarted: "service Not Started",
-                serviceLoading: "service Is Loading...",
+                serviceLoading: "service Is ",
                 started: "service Started",
                 closed: "Connection Closed",
             },
@@ -70,6 +73,9 @@ var generalTexts: {
         connect: "Connect", 
         disconnect: "Disconnect",
     },
+    mixedTexts: {
+        noData: "No Data"
+    }
 };
 
 export default generalTexts;

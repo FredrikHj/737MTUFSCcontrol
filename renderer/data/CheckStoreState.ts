@@ -1,7 +1,7 @@
 /* ================================================== Redux Store updater ==================================================
 Import  modules */
 import { initializeStore } from "../store";
-import checkServicesConnection from "./CheckServicesConnection";
+import checkServicesConnection from "./FSUIPC/CheckServiceConnection";
 
 export var currentValueStateTree: object = {};
 var getLatestStore = (state: any) => {return state;

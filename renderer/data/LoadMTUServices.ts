@@ -20,7 +20,7 @@ var loadMTUServices = (e: any) => {
         // Connect to services
             // FSUIPC
                 // Just give the loading proccess to show
-                setTimeout(() => {loadFsuipcService("connect");}, 3000);
+                setTimeout(() => {loadFsuipcService("connect");},2000);
 
             /* Phidgets Boards
                 axios.get("/api/RunPhidgetsConnection", {params: {mode: targetButton}}).then(response => {

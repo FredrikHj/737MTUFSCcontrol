@@ -16,7 +16,7 @@ import {initializeStore} from '../store';
 type MyAppProps = AppProps & {
     emotionCache?: EmotionCache;
 }
-import '../data/LoadingIndicator.css'; 
+import '../data/LoadingIndicator/LoadingIndicators.css'; 
 
 function MyApp(props: MyAppProps) {
     const {Component, pageProps, emotionCache = clientSideEmotionCache} = props;

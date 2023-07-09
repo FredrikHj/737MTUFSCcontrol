@@ -11,7 +11,6 @@ import { loadFsuipcService } from "./LoadFsuipcService";
 import generalTexts from '../GeneralTexts';
 import { log } from 'console';
 
-
 var ImportFSUIPCService = ()=>{
     var storeListenerAppStart: any = checkReduxStoreTree("appStart");
     var storeListenerServiceFSUIPC: any = checkReduxStoreTree("serviceFSUIPC");
@@ -21,28 +20,20 @@ var ImportFSUIPCService = ()=>{
     useEffect(() => {
 
     },[storeListenerServiceFSUIPC]);
-    var triggerConState = (e: any) => { 
-        var targetButton = e.target.id;
-        console.log('targetButton :', targetButton);
-        if(targetButton === generalTexts.conButton["connect"]) {
-            loadFsuipcService("connect");
-            updateConButton(generalTexts.conButton["disconnect"]);
-        }
-        if(targetButton === generalTexts.conButton["disconnect"]) {
-            loadFsuipcService("disconnect");            
-            updateConButton(generalTexts.conButton["connect"]);
-        }
-    }
+
     console.log(storeListenerServiceFSUIPC);
     
     return (
       <Box
         sx={{
+          marginTop: "15px",
           border: "1px solid red",
           display: "flex",
           flexDirection: "row",
           justifyContent: "center",
           alignItems: "center",
+          borderRadius: "50px",
+          backgroundColor: "gray",
         }}
       >
         
@@ -72,11 +63,7 @@ var ImportFSUIPCService = ()=>{
                 alignItems: "center",
               }}
              >
-
-              {(storeListenerServiceFSUIPC.connectionInfo["dataReceived"] === true) 
-                ? <FSUIPCInfoContainer />
-                : "Connection Data is Loading ..."
-              }
+             <FSUIPCInfoContainer/>
             </Box>
           </Box>
         

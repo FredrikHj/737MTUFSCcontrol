@@ -14,49 +14,26 @@ import {
 
 import generalTexts from '../GeneralTexts'; 
 import FSUIPCFunctions, { loadFSUIPCConInfo } from './RunningFSUIPCFunctions';
-var fsuipcInstance: any = null;
+import checkServicesConnection from "./CheckServiceConnection";
+
 
 export var loadFsuipcService = (runMode: string) =>{
     // Initilize instance
-    fsuipcInstance = new WebSocket(`ws://localhost:2048/fsuipc/`, "fsuipc");
+        var fsuipcInstance: any = null;
+        fsuipcInstance = new WebSocket(`ws://localhost:2048/fsuipc/`, "fsuipc");
+
     if(runMode === "connect"){
-        FSUIPCFunctions.onopen(fsuipcInstance);
-
-         
-        setTimeout(() => {
-            loadFSUIPCConInfo(fsuipcInstance);
-        }, 4000); 
-        FSUIPCFunctions.onclose(fsuipcInstance);   
-        if(!fsuipcInstance.onerror){
-    }                    
-console.log('fsuipcInstance :', fsuipcInstance);
- 
-            //fsuipcInstance.onerror = function () {
-            //initializeStore.dispatch(setStateName(generalTexts.conStates.fsuipc.serverError["name"]));
-            //initializeStore.dispatch(setErrorInfo(generalTexts.conStates.fsuipc.serverError["type"][0]));
-
-    } 
-    if(runMode === "disconnect") {
-        fsuipcInstance.close();
+        fsuipcInstance.onopen = () => {
+            FSUIPCFunctions["onOpen"]();
+            loadFSUIPCConInfo(fsuipcInstance);      
+        };
         fsuipcInstance.onclose = () => {
-            alert('Connection Closed!');
-            console.log('Connection Closed!');
-            initializeStore.dispatch(setConnectionInfo({})); 
-            
-            initializeStore.dispatch(setStateName(generalTexts.conStates.fsuipc.webService["notStarted"]));
-            
+            FSUIPCFunctions["onClose"]();
             fsuipcInstance = null;
-        }
+            checkServicesConnection(generalTexts.services["fsuipc"]);
+        };
+        fsuipcInstance.onerror = () => {
+            FSUIPCFunctions["onError"]();
+        };
     }
-        fsuipcInstance.onclose = () => {
-            console.log('onclose :', onclose);
-            initializeStore.dispatch(setConnectionInfo({})); 
-            
-            initializeStore.dispatch(setStateName(generalTexts.conStates.fsuipc.webService["notStarted"]));
-            
-            fsuipcInstance = null;
-        }
-    
-};
-
-export default fsuipcInstance;
+}

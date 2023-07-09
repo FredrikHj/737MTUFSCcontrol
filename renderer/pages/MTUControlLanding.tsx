@@ -1,4 +1,4 @@
-/* ================================================== Input Form ==================================================
+/* ================================================== Landing Page ==================================================
 Import  modules */
 import { initializeStore } from "../store";
 
@@ -8,14 +8,14 @@ import checkReduxStoreTree, {
   handleStateChange,
 } from "../data/CheckStoreState";
 import loadMTUServices from '../data/LoadMTUServices';
-import LoadingIndicator from "../data/LoadingIndicator";
+import LoadingIndicator from "../data/LoadingIndicator/LoadingIndicators";
 
 import { Box, Button, Grid, Paper, styled, Table, TableHead, TableBody, TableContainer, Typography } from '@mui/material';
 
 import generalTexts from '../data/GeneralTexts';
 import ImportFSUIPCService from '../data/FSUIPC/ImportFSUIPCService';
 import ImportPhidgetsService from '../data/Phidgets/ImportPhidgetsService';
-
+import LoadServiceContainer from "../components/LoadServiceContainer";
 // Begin to listen for Store state´s changes 
     initializeStore.subscribe(handleStateChange)
     //checkReduxStoreTree();
@@ -53,80 +53,15 @@ var MTUControlLanding = ()=>{
     console.log("storeListenerServiceFSUIPC :", storeListenerServiceFSUIPC);
       
     return( 
-        <Box sx={{border: "1px solid red", width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-           
-            <Box sx={{width: "50%", display: "flex", flexDirection: "column", alignContent: "center"}}>
-                <Box sx={{marginBottom: "10px", fontWeight: "bold", fontSize: "25px", letterSpacing: "20px", textDecoration: "underline"}}>
-                    {generalTexts.services["fsuipc"].toUpperCase()}
-                </Box>
-                <Box sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "space-around"
-                    }}>
-                    <Button sx={{width: "150px"}}id="fsuipc" onClick={loadMTUServices} variant="contained">
-                        {(storeListenerAppStart["connectionLoading"] === true)
-                            ? <>
-                                <span className="spinner-border spinner-border-sm"></span><span className="marginLeft: 10px" onClick={loadMTUServices} id={conButton}>
-                                    <Box sx={{
-                                                display: "flex",
-                                                flexDirection: "row",
-                                                justifyContent: "space-around"
-                                            }}>
-                                        Loading <LoadingIndicator/>
-                                    </Box>
-                                </span></>          
-                            : conButton
-                        }
-                    </Button>
-                        <Box
-                            sx={{
-                                width: "200px",
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                color: "white",
-                                backgroundColor:
-                                    storeListenerServiceFSUIPC["FSUIPCConnected"] === true
-                                    ? "green"
-                                    : "red",
-                            }}
-                            key={"3r2r"}
-                        >
-                        {[
-                        storeListenerServiceFSUIPC["FSUIPCConnected"] === false && storeListenerAppStart["connectionLoading"] === false && (
-                            <Box>
-                                Web{" "}
-                                {generalTexts.conStates.fsuipc.webService["notStarted"]}
-                            </Box>
-                        ),
-                        storeListenerServiceFSUIPC["FSUIPCConnected"] === false && storeListenerAppStart["connectionLoading"] === true && (
-                            <Box>
-                            Web{" "}
-                            {
-                                generalTexts.conStates.fsuipc.webService[
-                                "serviceLoading"
-                                ]
-                            }
-                            </Box>
-                            ),
-                        storeListenerServiceFSUIPC["FSUIPCConnected"] === true && storeListenerAppStart["connectionLoading"] === false && (
-                            <Box>
-                            Web{" "}
-                            {generalTexts.conStates.fsuipc.webService["started"]}
-                            </Box>
-                        ),
-                        ]}
-                    </Box>
-            </Box>
-            <ImportFSUIPCService/>
-            
-  
-        </Box>
-            <Box>                                        
-                <ImportPhidgetsService/>
-            </Box>
+        <Box sx={{width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
+           <LoadServiceContainer
+                MTUService={generalTexts.services["fsuipc"]}
+                serviceName={generalTexts.services["fsuipc"].toUpperCase()}
+           />
+            <LoadServiceContainer
+                MTUService={generalTexts.services["phidgets"]}
+                serviceName={generalTexts.services["phidgets"].toUpperCase()}
+           />
     </Box>
     );
 }
