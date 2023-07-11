@@ -10,33 +10,11 @@ import LoadingIndicator from "../LoadingIndicator/LoadingIndicators";
 import { log } from 'console';
 
 var FSUIPCInfoContainer = () => {
-    var storeListenerServiceFSUIPC: any = checkReduxStoreTree("serviceFSUIPC");
-    
-    var getStoreService: any = useSelector((state: any) => state["serviceFSUIPC"]);
-    const [ receivedData, updateReceivedData ] = useState<any>(false);
-    
-
+    var storeListenerService: any = checkReduxStoreTree("serviceFSUIPC");
     
     useEffect(() => {
-
-        var consumerWaiter = new Promise((resolve, reject) => {
-            if (getStoreService.testObj["received"] === true) {
-                resolve(getStoreService.testObj.data["isConnectionOpen"]);
-            }
-            else {
-                reject(Error("Promise rejected"));
-            }
-        });
-        
-        consumerWaiter.then(function(result) {
-            console.log(result); // “Promise resolved successfully”
-            result !== true ? updateReceivedData(result) : updateReceivedData("No data");
-            }, err => {
-            console.log(err); // Error: “Promise rejected”
-        });
-
-    }, [storeListenerServiceFSUIPC]);
-    console.log(storeListenerServiceFSUIPC); 
+    }, [storeListenerService]);
+    console.log(storeListenerService); 
     
     return( 
         <>
@@ -65,8 +43,8 @@ var FSUIPCInfoContainer = () => {
 
                             <TableCell>
                                 {
-                                    storeListenerServiceFSUIPC["FSUIPCConnected"] === true && storeListenerServiceFSUIPC.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerServiceFSUIPC.connectionInfo.receivedData.data["isConnectionOpen"] === true ? "Yes" : "No"
+                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
+                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true ? "Yes" : "No"
                                         :   generalTexts.mixedTexts["noData"]
                                 }
                             </TableCell> 
@@ -77,8 +55,8 @@ var FSUIPCInfoContainer = () => {
                             </TableCell>
                             <TableCell>
                                 { 
-                                    storeListenerServiceFSUIPC["FSUIPCConnected"] === true && storeListenerServiceFSUIPC.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerServiceFSUIPC.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerServiceFSUIPC.connectionInfo.receivedData.data["FSUIPCWebSocketServerVersion"]
+                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
+                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["FSUIPCWebSocketServerVersion"]
                                         :   generalTexts.mixedTexts["noData"]
                                         }
                             </TableCell>
@@ -89,8 +67,8 @@ var FSUIPCInfoContainer = () => {
                             </TableCell>
                             <TableCell>
                                 {                                        
-                                    storeListenerServiceFSUIPC["FSUIPCConnected"] === true && storeListenerServiceFSUIPC.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerServiceFSUIPC.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerServiceFSUIPC.connectionInfo.receivedData.data["flightSim"] === null ? "No Info" : storeListenerServiceFSUIPC.connectionInfo.receivedData.data["flightSim"]
+                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
+                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["flightSim"] === null ? "No Info" : storeListenerService.connectionInfo.receivedData.data["flightSim"]
                                         :   generalTexts.mixedTexts["noData"]
                                 }
                             </TableCell>
@@ -101,8 +79,8 @@ var FSUIPCInfoContainer = () => {
                             </TableCell>
                             <TableCell>
                                 {
-                                    storeListenerServiceFSUIPC["FSUIPCConnected"] === true && storeListenerServiceFSUIPC.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerServiceFSUIPC.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerServiceFSUIPC.connectionInfo.receivedData.data["FSUIPCVersion"] === null ? "No Info" : storeListenerServiceFSUIPC.connectionInfo.receivedData.data["FSUIPCVersion"]
+                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
+                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["FSUIPCVersion"] === null ? "No Info" : storeListenerService.connectionInfo.receivedData.data["FSUIPCVersion"]
                                         :   generalTexts.mixedTexts["noData"]
                                 }
                             </TableCell>
@@ -113,8 +91,8 @@ var FSUIPCInfoContainer = () => {
                             </TableCell>
                             <TableCell>
                                 {
-                                    storeListenerServiceFSUIPC["FSUIPCConnected"] === true && storeListenerServiceFSUIPC.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerServiceFSUIPC.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerServiceFSUIPC.connectionInfo.receivedData.data["flightSimVersionCode"]
+                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
+                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["flightSimVersionCode"]
                                         :   generalTexts.mixedTexts["noData"]
                                 }                                        
                             </TableCell>
@@ -125,8 +103,8 @@ var FSUIPCInfoContainer = () => {
                             </TableCell>
                             <TableCell>
                                 {   
-                                    storeListenerServiceFSUIPC["FSUIPCConnected"] === true && storeListenerServiceFSUIPC.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerServiceFSUIPC.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerServiceFSUIPC.connectionInfo.receivedData.data["newServerVersionAvailable"] === true ? "yes" : "No"
+                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
+                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["newServerVersionAvailable"] === true ? "yes" : "No"
                                         :   generalTexts.mixedTexts["noData"]
                                 }                             
                             </TableCell>
@@ -137,8 +115,8 @@ var FSUIPCInfoContainer = () => {
                             </TableCell>
                             <TableCell>
                                 {
-                                    storeListenerServiceFSUIPC["FSUIPCConnected"] === true && storeListenerServiceFSUIPC.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerServiceFSUIPC.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerServiceFSUIPC.connectionInfo.receivedData.data["flightSimVersionText"] === null ? "No Info" : storeListenerServiceFSUIPC.connectionInfo.receivedData.data["flightSimVersionText"]
+                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
+                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["flightSimVersionText"] === null ? "No Info" : storeListenerService.connectionInfo.receivedData.data["flightSimVersionText"]
                                         :   generalTexts.mixedTexts["noData"]
                                 }
                             </TableCell>
@@ -149,8 +127,8 @@ var FSUIPCInfoContainer = () => {
                             </TableCell>
                             <TableCell>
                                 {
-                                    storeListenerServiceFSUIPC["FSUIPCConnected"] === true && storeListenerServiceFSUIPC.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerServiceFSUIPC.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerServiceFSUIPC.connectionInfo.receivedData.data["isConnectedToWideClient"] === true ? "yes" : "No"
+                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
+                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["isConnectedToWideClient"] === true ? "yes" : "No"
                                         :   generalTexts.mixedTexts["noData"]
                                 }                                           
                             </TableCell>

@@ -3,7 +3,9 @@ import generalTexts from "../data/GeneralTexts";
 
 interface State {
     name: string,
-    FSUIPCConnected: boolean,
+    fsuipcConnectionLoading: boolean,
+    connected: boolean,
+    labelConButton: string,
     stateName: string,
     errorInfo: string,
     connectionInfo: object,
@@ -11,7 +13,9 @@ interface State {
 
 const initialState: State = {
     name: "FSUIPC",
-    FSUIPCConnected: false,
+    fsuipcConnectionLoading: false,
+    connected: false,
+    labelConButton: generalTexts.conButton["connect"],
     stateName: generalTexts.conStates.fsuipc.webService["notStarted"],
     errorInfo: "No Errors",
     connectionInfo: {
@@ -23,8 +27,14 @@ export const FSUIPCSlicer = createSlice({
     name: "FSUIPCSlicer",
     initialState,
     reducers: {
-        setFSUIPCConnected : (state: State, action: PayloadAction<boolean>) => {
-            state.FSUIPCConnected = action.payload;
+        setFsuipcConnectionLoading: (state: State, action: PayloadAction<boolean>) => {
+            state.fsuipcConnectionLoading = action.payload;
+        },
+        setConnected : (state: State, action: PayloadAction<boolean>) => {
+            state.connected = action.payload;
+        },
+        setLabelConButton: (state: State, action: PayloadAction<string>) => {
+            state.labelConButton = action.payload;
         },
         setStateName: (state: State, action: PayloadAction<string>) => {
             state.stateName = action.payload;
@@ -38,5 +48,5 @@ export const FSUIPCSlicer = createSlice({
     },
 });
 
-export const { setFSUIPCConnected, setStateName, setErrorInfo, setConnectionInfo } = FSUIPCSlicer.actions;
+export const { setFsuipcConnectionLoading, setConnected, setLabelConButton, setStateName, setErrorInfo, setConnectionInfo } = FSUIPCSlicer.actions;
 export default FSUIPCSlicer.reducer;

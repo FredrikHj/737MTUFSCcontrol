@@ -1,16 +1,14 @@
 import VariousFSUIPCCommands from './FSUIPCCommandsObj';
 import { initializeStore } from "../../store";
 import {
-    setFSUIPCConnected,
+    setFsuipcConnectionLoading,
+    setConnected,
+    setLabelConButton,
     setStateName,
     setErrorInfo,
     setConnectionInfo,
 } from "../../redux/FSUIPCSlicer";
-import {
-    setConnectionLoading,
-    setConnected,
-    setLabelConButton,
-} from "../../redux/appStartSlicer";
+
 
 import generalTexts from '../GeneralTexts'; 
 
@@ -18,17 +16,17 @@ var FSUIPCFunctions: any = {
     onOpen: () => {
         console.log('Connection Opened!');
         initializeStore.dispatch(setStateName(generalTexts.conStates.fsuipc.webService["started"]));
-        initializeStore.dispatch(setFSUIPCConnected(true));
+        initializeStore.dispatch(setConnected(true));
         
         // If all services are connected = run and set these values to the store
-        initializeStore.dispatch(setConnectionLoading(false));
+        initializeStore.dispatch(setFsuipcConnectionLoading(false));
         initializeStore.dispatch(setConnected(true)); 
         initializeStore.dispatch(setLabelConButton(generalTexts.conButton["disconnect"]));
     },
     onClose: () => { 
         console.log('Connection Closed!');
         initializeStore.dispatch(setConnectionInfo({ dataReceived: false,}));
-        initializeStore.dispatch(setFSUIPCConnected(false)); 
+        initializeStore.dispatch(setConnected(false)); 
         initializeStore.dispatch(setStateName(generalTexts.conStates.fsuipc.webService["notStarted"]));
         initializeStore.dispatch(setLabelConButton(generalTexts.conButton["connect"]));
         

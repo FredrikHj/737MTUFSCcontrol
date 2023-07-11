@@ -4,25 +4,23 @@ import { CSSOthersObjectForCSSObject } from '@mui/styled-engine';
 
 interface State {
     name: string,
-    phidgetsConnected: boolean,
+    phidgetsConnectionLoading: boolean,
+    connected: boolean,
+    labelConButton: string,
     stateName: string,
     errorInfo: string,
     connectionInfo: object,
-    testObj: {
-        received: boolean,
-        data: object,
-    },
 }
 
 const initialState: State = {
     name: "Phidgets",
-    phidgetsConnected: false,
+    phidgetsConnectionLoading: false,
+    connected: false,
+    labelConButton: generalTexts.conButton["connect"],
     stateName: generalTexts.conStates.fsuipc.webService["notStarted"],
     errorInfo: "No Errors",
-    connectionInfo: {},
-    testObj: {
-        received: false,
-        data: {},
+    connectionInfo: {
+        dataReceived: false,
     },
 };
 
@@ -30,8 +28,14 @@ export const PhidgetsSlicer = createSlice({
     name: "PhidgetsSlicer",
     initialState,
     reducers: {
-        setPhidgetsConnected : (state: State, action: PayloadAction<boolean>) => {
-            state.phidgetsConnected = action.payload;
+        setPhidgetsConnectionLoading: (state: State, action: PayloadAction<boolean>) => {
+            state.phidgetsConnectionLoading = action.payload;
+        },
+        setConnected: (state: State, action: PayloadAction<boolean>) => {
+            state.connected = action.payload;
+        },
+        setLabelConButton: (state: State, action: PayloadAction<string>) => {
+            state.labelConButton = action.payload;
         },
         setStateName: (state: State, action: PayloadAction<string>) => {
             state.stateName = action.payload;
@@ -42,11 +46,8 @@ export const PhidgetsSlicer = createSlice({
         setConnectionInfo: (state: State, action: PayloadAction<object>) => {
             state.connectionInfo = action.payload;
         },        
-        setTestObj: (state: State, action: PayloadAction<any>) => {
-            state.testObj = action.payload;
-        },
     },
 });
 
-export const { setPhidgetsConnected, setStateName, setErrorInfo, setConnectionInfo, setTestObj } = PhidgetsSlicer.actions;
+export const { setPhidgetsConnectionLoading, setConnected, setLabelConButton, setStateName, setErrorInfo, setConnectionInfo } = PhidgetsSlicer.actions;
 export default PhidgetsSlicer.reducer;

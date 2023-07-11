@@ -1,23 +1,10 @@
 import { initializeStore } from "../../store";
 
-import {
-  setFSUIPCConnected,
-  setStateName,
-  setErrorInfo,
-  setConnectionInfo,
-} from "../../redux/FSUIPCSlicer";
-import {
-  setConnectionLoading,
-  setConnected,
-  setLabelConButton,
-} from "../../redux/appStartSlicer";
-
 import generalTexts from '../GeneralTexts'; 
 import FSUIPCFunctions, { loadFSUIPCConInfo } from './RunningFSUIPCFunctions';
 import checkServicesConnection from "./CheckServiceConnection";
 
-
-export var loadFsuipcService = (runMode: string) =>{
+var LoadFsuipcService = (runMode: string) =>{
     // Initilize instance
         var fsuipcInstance: any = null;
         fsuipcInstance = new WebSocket(`ws://localhost:2048/fsuipc/`, "fsuipc");
@@ -25,6 +12,7 @@ export var loadFsuipcService = (runMode: string) =>{
     if(runMode === "connect"){
         fsuipcInstance.onopen = () => {
             FSUIPCFunctions["onOpen"]();
+
             loadFSUIPCConInfo(fsuipcInstance);      
         };
         fsuipcInstance.onclose = () => {
@@ -37,3 +25,5 @@ export var loadFsuipcService = (runMode: string) =>{
         };
     }
 }
+
+export default LoadFsuipcService;

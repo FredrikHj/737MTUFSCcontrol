@@ -7,7 +7,7 @@ export const initializeStore = configureStore({
     reducer: {
         appStart: AppStartSlicer.reducer,
         serviceFSUIPC: FSUIPCSlicer.reducer,    
-        servicePhidgets: PhidgetsSlicer.reducer,    
+        servicePHIDGETS: PhidgetsSlicer.reducer,    
     },
     devTools: true,
     preloadedState: undefined,

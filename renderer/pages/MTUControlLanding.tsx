@@ -54,15 +54,13 @@ var MTUControlLanding = ()=>{
       
     return( 
         <Box sx={{width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between"}}>
-           <LoadServiceContainer
+            <LoadServiceContainer
                 MTUService={generalTexts.services["fsuipc"]}
-                serviceName={generalTexts.services["fsuipc"].toUpperCase()}
-           />
+            />
             <LoadServiceContainer
                 MTUService={generalTexts.services["phidgets"]}
-                serviceName={generalTexts.services["phidgets"].toUpperCase()}
-           />
-    </Box>
+            />
+        </Box>
     );
 }
 export default MTUControlLanding;

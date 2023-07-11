@@ -15,8 +15,6 @@ var ImportFSUIPCService = ()=>{
     var storeListenerAppStart: any = checkReduxStoreTree("appStart");
     var storeListenerServiceFSUIPC: any = checkReduxStoreTree("serviceFSUIPC");
 
-    const [ conButton, updateConButton] = useState<string>(generalTexts.conButton["connect"]);
-
     useEffect(() => {
 
     },[storeListenerServiceFSUIPC]);
@@ -71,7 +69,3 @@ var ImportFSUIPCService = ()=>{
     );
 }
 export default ImportFSUIPCService;
-
-/*data	An object containing the information requested. See below for details.
-errorCode	A short string to tell you what error occurred. null if success is true. See below for possible errors.
-errorMessage	A longer description of the error. null if success is true*/

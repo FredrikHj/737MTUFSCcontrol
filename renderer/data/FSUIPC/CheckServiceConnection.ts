@@ -15,7 +15,7 @@ var checkServicesConnection = (service: string) =>{
 var retryConnection = (service: string) => { 
   if (service === generalTexts.services["fsuipc"]) {
     var storeListenerServiceFSUIPC: any = checkReduxStoreTree("serviceFSUIPC");
-    var serviceConnected: boolean = storeListenerServiceFSUIPC["FSUIPCConnected"];
+    var serviceConnected: boolean = storeListenerServiceFSUIPC["connected"];
     
     if (serviceConnected === false) {
       setTimeout(() => {
