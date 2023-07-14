@@ -41,11 +41,11 @@ var LoadServiceContainer = (props: any) =>{
             setTimeout(() => { 
                 updatedAppState !== checkReduxStoreTree("everyOne") && 
                     updateAppState(storeListener);
-                    updateFsuipcStarted(storeListener[reduxStoreServiceObjKey]["connected"]);
-                    updatePhidgetsStarted(storeListener[reduxStoreServiceObjKey]["connected"]);
-            }, 2000);
+                    updateFsuipcStarted(MTUService === "fsuipc" && storeListener[reduxStoreServiceObjKey]["connected"]);
+                    updatePhidgetsStarted(MTUService === "phidgets" && storeListener[reduxStoreServiceObjKey]["connected"]);
+            }, 2000); 
             currentService === "" && updateCurrentService(MTUService);
-    }, [storeListener, MTUService, reduxStoreServiceObjKey, fsuipcStarted, phidgetsStarted]);
+    }, [storeListener, currentService, reduxStoreServiceObjKey, fsuipcStarted, phidgetsStarted]);
     console.log('fsuipcStarted & phidgetsStarted :', fsuipcStarted, phidgetsStarted);
 
     return( 
@@ -93,7 +93,7 @@ var LoadServiceContainer = (props: any) =>{
                         key={"3r2r"}
                         >
                         
-                        {[
+                        {[ 
                             storeListener[reduxStoreServiceObjKey]["connected"] === false && storeListener[reduxStoreServiceObjKey][`${MTUService}ConnectionLoading`] === false && (
                                 <Box key={ MTUService }>
                                     Web{" "}
