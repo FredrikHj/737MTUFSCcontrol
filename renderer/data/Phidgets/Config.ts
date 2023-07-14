@@ -2,7 +2,7 @@ var serverConfig: {
     hostname: string,
     port: number
 } = {
-    hostname: "737Motorized Throttle Unit Control",
+    hostname: "737MotorizedTHQControl",
     port:  5661,
 };
 

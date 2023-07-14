@@ -19,7 +19,7 @@ var retryConnection = (service: string) => {
     
     if (serviceConnected === false) {
       setTimeout(() => {
-        console.log('Retry to Connnect!');
+ 
         setTimeout(() => {loadFsuipcService("connect");},2000);
         return retryConnection(service);
       }, 6000);

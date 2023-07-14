@@ -11,131 +11,77 @@ import { log } from 'console';
 
 var PhidgetsInfoContainer = () => {
     var storeListenerService: any = checkReduxStoreTree("servicePHIDGETS");
-        
+    const [ updatedAppState, updateAppState ] = useState<any>(null);
+
     useEffect(() => {
-    }, [storeListenerService]);
-    console.log(storeListenerService); 
+        //Check the stor state tree. if change load the stater over again
+            setTimeout(() => { 
+                updatedAppState !== checkReduxStoreTree("servicePHIDGETS") && 
+                    updateAppState(storeListenerService); 
+            }, 2000);
+    }, [updatedAppState]);
+ 
     
     return( 
         <>
-            <TableContainer>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell sx={{textAlign: "center"}} colSpan={2}>
-                                FlightSim Info
-                            </TableCell>
-                                
-                            <TableCell>
-                                
-                            </TableCell>
+            {updatedAppState !== null &&
+            <Table>
+                <TableHead> 
+                    <TableRow>
+                        <TableCell sx={{textAlign: "center"}} colSpan={5}>
+                            Phidgets Server Info
+                        </TableCell>
+                    </TableRow>     
+                </TableHead>
+                <TableBody>
+                    <TableRow>
+                        <TableCell sx={{textAlign: "center"}} colSpan={2}> 
+                            Server Messegnes   
+                        </TableCell>
 
-                            <TableCell colSpan={2}>
-                                Service Info
-                            </TableCell>
-                        </TableRow>     
-                    </TableHead>
-                    <TableBody>
-                        <TableRow>
-                            <TableCell> 
-                                Connected to FlightSim?    
-                            </TableCell>
-
-                            <TableCell>
-                                {
-                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true ? "Yes" : "No"
-                                        :   generalTexts.mixedTexts["noData"]
-                                }
-                            </TableCell> 
-                            <TableCell>
-                            </TableCell>
-                            <TableCell>
-                                Phidgets WebSocket Server Version
-                            </TableCell>
-                            <TableCell>
-                                { 
-                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["PhidgetsWebSocketServerVersion"]
-                                        :   generalTexts.mixedTexts["noData"]
-                                        }
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                                FlightSim
-                            </TableCell>
-                            <TableCell>
-                                {                                        
-                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["flightSim"] === null ? "No Info" : storeListenerService.connectionInfo.receivedData.data["flightSim"]
-                                        :   generalTexts.mixedTexts["noData"]
-                                }
-                            </TableCell>
-                            <TableCell>
-                            </TableCell>
-                            <TableCell>
-                                PhidgetsVersion
-                            </TableCell>
-                            <TableCell>
-                                {
-                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["PhidgetsVersion"] === null ? "No Info" : storeListenerService.connectionInfo.receivedData.data["PhidgetsVersion"]
-                                        :   generalTexts.mixedTexts["noData"]
-                                }
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                                FlightSimVersion Code
-                            </TableCell>
-                            <TableCell>
-                                {
-                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["flightSimVersionCode"]
-                                        :   generalTexts.mixedTexts["noData"]
-                                }                                        
-                            </TableCell>
-                            <TableCell>
-                            </TableCell>
-                            <TableCell>
-                                Update is Available?
-                            </TableCell>
-                            <TableCell>
-                                {   
-                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["newServerVersionAvailable"] === true ? "yes" : "No"
-                                        :   generalTexts.mixedTexts["noData"]
-                                }                             
-                            </TableCell>
-                        </TableRow>
-                        <TableRow>
-                            <TableCell>
-                                FlightSim Version
-                            </TableCell>
-                            <TableCell>
-                                {
-                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["flightSimVersionText"] === null ? "No Info" : storeListenerService.connectionInfo.receivedData.data["flightSimVersionText"]
-                                        :   generalTexts.mixedTexts["noData"]
-                                }
-                            </TableCell>
-                            <TableCell>
-                            </TableCell>
-                            <TableCell>
-                                WideClient Connection?
-                            </TableCell>
-                            <TableCell>
-                                {
-                                    storeListenerService["connected"] === true && storeListenerService.connectionInfo["dataReceived"] === true
-                                        ?   storeListenerService.connectionInfo.receivedData.data["isConnectionOpen"] === true && storeListenerService.connectionInfo.receivedData.data["isConnectedToWideClient"] === true ? "yes" : "No"
-                                        :   generalTexts.mixedTexts["noData"]
-                                }                                           
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        <TableCell sx={{textAlign: "center"}} colSpan={3}>
+                            { 
+                                updatedAppState["connected"] === true && updatedAppState.connectionInfo["dataReceived"] === true
+                                    ?   updatedAppState.connectionInfo.receivedData.data["messegnes"]
+                                    :   generalTexts.mixedTexts["noData"]
+                            }
+                        </TableCell> 
+                        <TableCell>
+                        </TableCell>
+                        <TableCell>
+                            
+                        </TableCell>
+                        <TableCell>
+                    
+                        </TableCell>
+                    </TableRow>
+                    <TableRow>
+                        <TableCell>
+                            Server Name
+                        </TableCell>
+                        <TableCell>
+                            {                                        
+                                updatedAppState["connected"] === true && updatedAppState.connectionInfo["dataReceived"] === true
+                                    ?   updatedAppState.connectionInfo.receivedData.data["hostname"]
+                                    :   generalTexts.mixedTexts["noData"]
+                            }
+                        </TableCell>
+                        <TableCell>
+                        </TableCell>
+                        <TableCell>
+                            Port Nr
+                        </TableCell>
+                        <TableCell>
+                            {                                        
+                                updatedAppState["connected"] === true && updatedAppState.connectionInfo["dataReceived"] === true
+                                    ?   updatedAppState.connectionInfo.receivedData.data["port"]
+                                    :   generalTexts.mixedTexts["noData"]
+                            }                            
+                        </TableCell>
+                    </TableRow>
+                </TableBody>
+            </Table>
+            }
         </>    
     );
 }

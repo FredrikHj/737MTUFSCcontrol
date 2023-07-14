@@ -47,7 +47,7 @@ functionInCommon = {
         },
         [functionsKeyNames.commonFunctionsNames["funcDataValues"]]: (layout:  GetStatisticDataTypes["layout"], data: GetStatisticDataTypes["data"]) => {
             if(layout === "stationary"){
-                console.log("stationary", data);
+ 
 
  
                 var newDataArr: Array<object>;
@@ -99,7 +99,7 @@ functionInCommon = {
                     currentOrderValue = item["order"];  
                     currentLinesValue = item["rader"];  
                     
-                    console.log("forEach", item, currentTitle, keyValues);
+ 
                     
                     if(currentTitle !== "Varubrev" && currentTitle !== "Totalt" && currentTitle !== "Färdigplockat"){
                         keyValues[functionsKeyNames.noCommonFunctionsNames["headlineOrder"]].push(item["order"]);
@@ -146,7 +146,7 @@ functionInCommon = {
                     val: element["qty"], 
                 });
             });    
-            console.log('newDataArr :', newDataArr);
+ 
             
             return newDataArr;
         },
@@ -216,7 +216,7 @@ functionInCommon = {
                     keyValues.push(binArr);
                     
                     keyValues.forEach((element: any) => {
-                        console.log("keyValues", element);
+ 
                         
                         element.forEach(elementItem => {
                             binsChartsValueArr.push(elementItem["totalUsage"]*100);
@@ -233,7 +233,7 @@ functionInCommon = {
     },
 };
 export var builAutostorePickDataObj = (dataObj: GetStatisticDataTypes["dataObj"]) => {
- console.log("--------------------------- builAutostorePickDataObj", dataObj);
+ 
  
     var autostorePickDataObj: object = {
         [functionsKeyNames["headHeadline"]]: {
@@ -286,7 +286,7 @@ export var builAutostorePickDataObj = (dataObj: GetStatisticDataTypes["dataObj"]
             [functionsKeyNames.noCommonFunctionsNames["seriesValuesArr"]]: "",
         },
     };
-    console.log("autostorePickDataObj", autostorePickDataObj);
+ 
     
     return autostorePickDataObj;    
 };

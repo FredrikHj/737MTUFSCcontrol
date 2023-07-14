@@ -7,14 +7,10 @@ import React, { useState, useEffect } from 'react';
 import checkReduxStoreTree, {
   handleStateChange,
 } from "../data/CheckStoreState";
-import loadMTUServices from '../data/LoadMTUServices';
-import LoadingIndicator from "../data/LoadingIndicator/LoadingIndicators";
 
 import { Box, Button, Grid, Paper, styled, Table, TableHead, TableBody, TableContainer, Typography } from '@mui/material';
 
 import generalTexts from '../data/GeneralTexts';
-import ImportFSUIPCService from '../data/FSUIPC/ImportFSUIPCService';
-import ImportPhidgetsService from '../data/Phidgets/ImportPhidgetsService';
 import LoadServiceContainer from "../components/LoadServiceContainer";
 // Begin to listen for Store state´s changes 
     initializeStore.subscribe(handleStateChange)
@@ -23,7 +19,6 @@ import LoadServiceContainer from "../components/LoadServiceContainer";
 var MTUControlLanding = ()=>{
     var storeListenerAppStart: any = checkReduxStoreTree("appStart");
     var storeListenerServiceFSUIPC: any = checkReduxStoreTree("serviceFSUIPC");
-    var storeListenerServicePhidgets: any = checkReduxStoreTree("servicePhidgets");
 
     const [ updatedAppStartState, updateAppStartState ] = useState<any>(null);
  
@@ -34,7 +29,7 @@ var MTUControlLanding = ()=>{
     const [ conButton, updateConButton] = useState<string>(generalTexts.conButton["connect"]);
     
     useEffect(() => {
-            console.log('storeListenerAppStart :', storeListenerAppStart);
+ 
 
         // Load if app is not started
             if (appStarted === false && updatedAppStartState !==  null) { 
@@ -50,7 +45,7 @@ var MTUControlLanding = ()=>{
             }, 2000);
     }, [storeListenerAppStart, storeListenerServiceFSUIPC, updatedAppStartState, getStoreAppStartData, appStarted, isServicesLoading, conButton]);
 
-    console.log("storeListenerServiceFSUIPC :", storeListenerServiceFSUIPC);
+ 
       
     return( 
         <Box sx={{width: "100%", display: "flex", flexDirection: "row", justifyContent: "space-between"}}>

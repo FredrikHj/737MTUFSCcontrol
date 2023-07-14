@@ -14,9 +14,8 @@ import generalTexts from '../GeneralTexts';
 
 var FSUIPCFunctions: any = {
     onOpen: () => {
-        console.log('Connection Opened!');
+ 
         initializeStore.dispatch(setStateName(generalTexts.conStates.fsuipc.webService["started"]));
-        initializeStore.dispatch(setConnected(true));
         
         // If all services are connected = run and set these values to the store
         initializeStore.dispatch(setFsuipcConnectionLoading(false));
@@ -24,7 +23,7 @@ var FSUIPCFunctions: any = {
         initializeStore.dispatch(setLabelConButton(generalTexts.conButton["disconnect"]));
     },
     onClose: () => { 
-        console.log('Connection Closed!');
+ 
         initializeStore.dispatch(setConnectionInfo({ dataReceived: false,}));
         initializeStore.dispatch(setConnected(false)); 
         initializeStore.dispatch(setStateName(generalTexts.conStates.fsuipc.webService["notStarted"]));
@@ -32,9 +31,9 @@ var FSUIPCFunctions: any = {
         
     },
     onError: () => {
-        
+         
     },
-}
+} 
 
 export var loadFSUIPCConInfo = (fsuipcInstance: any) => {
     /*The following code will create a simple request with the command about.read. 
@@ -45,8 +44,8 @@ export var loadFSUIPCConInfo = (fsuipcInstance: any) => {
     fsuipcInstance.onmessage = (msg: any) => {
         // parse the JSON string to a Javascript object
         var response = JSON.parse(msg.data);
-        console.log('msg :', msg);
-        console.log(response);
+ 
+ 
         if(response.success === true){
             setTimeout(() => {
                 initializeStore.dispatch(setConnectionInfo({dataReceived: true, receivedData: response})); 
